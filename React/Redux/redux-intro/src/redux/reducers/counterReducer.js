@@ -1,6 +1,6 @@
 import * as actionsTypes from "../actions/actionsTypes";
 
-const counterReducer = (state = 0, action) => {
+const counterReducer = (state = 10, action) => {
   let newState;
   switch (action.type) {
     case actionsTypes.INCREASE_COUNTER:
