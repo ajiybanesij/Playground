@@ -1,3 +1,4 @@
 export default {
-    currentCategory:{categoryName:"Bavergasf"}
+    currentCategory:{categoryName:"Bavergasf"},
+    categories:[]
 }
