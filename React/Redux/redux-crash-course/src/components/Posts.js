@@ -1,29 +1,47 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { fetchPosts } from "../redux/actions/postActions";
+import { getCompanies } from "../redux/actions/companiesActions";
 
-export default class Posts extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: [],
-    };
-  }
+class Posts extends Component {
+ 
+  
   componentWillMount() {
-    fetch("http://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((data) => this.setState({ posts: data }));
+    this.props.getCompanies();
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.new) {
+      this.props.datas.unshift(nextProps.new);
+    }
+  }
+
   render() {
-    const postItems = this.state.posts.map((post) => (
-      <div key={post.id}>
-        <h3>{post.title}</h3>
-        <p>{post.body}</p>
+    const postItems = this.props.datas.map((item) => (
+      <div>
+        <p>{item}</p>
       </div>
     ));
     return (
-        <div>
-            <h1>Posts</h1>
-            {postItems}
-        </div>
+      <div>
+        <h1>Posts</h1>
+       
+      </div>
     );
   }
 }
+
+Posts.propTypes = {
+  fetchPosts: PropTypes.func.isRequired,
+  posts: PropTypes.array.isRequired,
+  new: PropTypes.object
+};
+
+const mapStateToProps = (state) => {
+  return {
+    datas: state.posts.companies,
+    new:state.posts.result
+  };
+};
+export default connect(mapStateToProps, { getCompanies })(Posts);

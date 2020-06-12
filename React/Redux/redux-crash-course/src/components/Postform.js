@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import {createProject,getCompanies} from "../redux/actions/companiesActions";
 
-export default class PostFrom extends Component {
+class PostFrom extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,19 +21,12 @@ export default class PostFrom extends Component {
   onSubmit(e) {
     e.preventDefault();
     const post = {
-      title: this.state.title,
-      body: this.state.body,
+      folder_name: this.state.title,
+      description: this.state.body,
     };
-
-    fetch("http://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(post),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    this.props.createProject(post);
+   
+    
   }
   render() {
     return (
@@ -65,3 +60,5 @@ export default class PostFrom extends Component {
     );
   }
 }
+
+export default connect(null, { createProject,getCompanies })(PostFrom);
